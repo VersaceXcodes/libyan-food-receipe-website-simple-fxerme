@@ -6,7 +6,7 @@ import { set_notification } from "@/store/main";
 
 const UV_RecipeListing: React.FC = () => {
   // Use the API_BASE_URL from the environment variables (must be prefixed with VITE_)
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:1337";
+  const API_BASE_URL = "http://localhost:3000";
   
   // Local state definitions
   const [recipes_list, setRecipesList] = useState<any[]>([]);
