@@ -47,7 +47,7 @@ const UV_RecipeDetail: React.FC = () => {
   useEffect(() => {
     const fetchRecipeDetails = async () => {
       try {
-        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:1337";
+        const apiBaseUrl = "http://localhost:3000";
         const response = await axios.get(`${apiBaseUrl}/recipes/${id}`);
         setRecipeDetails(response.data);
         setLoading(false);
