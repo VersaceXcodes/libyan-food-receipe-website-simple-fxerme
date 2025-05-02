@@ -10,6 +10,8 @@ import pkg from "pg";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const { Pool } = pkg;
 const {
@@ -22,6 +24,10 @@ const {
   PORT = 1337,
   JWT_SECRET
 } = process.env;
+
+// ESM workaround for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Postgres connection pool setup using provided snippet.
 const pool = new Pool(
@@ -48,6 +54,9 @@ app.use(cors());
 app.use(morgan("combined"));
 // Parse JSON bodies for all endpoints.
 app.use(express.json());
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 /*
   Utility function to generate a URL-friendly slug from a title.
@@ -442,7 +451,11 @@ app.delete("/recipes/:id", verifyAdminJWT, async (req, res) => {
   }
 });
 
-const port = PORT || 1337;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Catch-all route for SPA routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+// Start the server
+app.listen(3000, '0.0.0.0', () => {
+  console.log(`Server running on port 3000 and listening on 0.0.0.0`);
 });
