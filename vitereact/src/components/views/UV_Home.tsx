@@ -29,7 +29,7 @@ const UV_Home: React.FC = () => {
   // Function to fetch featured recipes from the backend API
   const fetch_featured_recipes = async () => {
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:1337";
+      const API_BASE_URL = "http://localhost:3000";
       const response = await axios.get(`${API_BASE_URL}/recipes?is_featured=true`);
       if (response.status === 200 && Array.isArray(response.data)) {
         setFeaturedRecipes(response.data);
